@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abdelwahed Ourida |Jr Full-Stack Portfolio</title>
+  <meta name="description" content="Premium animated full-stack developer portfolio for Abdelwahed Ourida, showcasing dynamic platforms, admin dashboards, PHP, PDO, MySQL, and product-level frontend craftsmanship." />
+  <style>
+    :root {
+      --bg: #040816;
+      --bg-2: #071125;
+      --surface: rgba(11, 20, 42, 0.6);
+      --surface-2: rgba(16, 28, 58, 0.78);
+      --text: #ecf3ff;
+      --muted: #9fb0cf;
+      --line: rgba(173, 194, 255, 0.13);
+      --cyan: #64e8ff;
+      --blue: #60a5fa;
+      --violet: #8b5cf6;
+      --green: #34d399;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --hero-shift: 28px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(100, 232, 255, 0.14), transparent 22%),
+        radial-gradient(circle at 80% 10%, rgba(139, 92, 246, 0.18), transparent 24%),
+        linear-gradient(180deg, #030712 0%, #040816 42%, #02040d 100%);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 38px 38px;
+      opacity: 0.25;
+      pointer-events: none;
+      -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
+      mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .container { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; }
+    .section { padding: 5.5rem 0; position: relative; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .45rem .75rem; border: 1px solid var(--line);
+      border-radius: var(--radius-sm); color: var(--cyan);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.03); font-size: .92rem;
+      backdrop-filter: blur(12px);
+    }
+    .badge::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 16px var(--green);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1; letter-spacing: -.04em; margin: 1rem 0 .8rem;
+    }
+    .section-subtitle {
+      color: var(--muted); max-width: 760px; margin-bottom: 2rem;
+      font-size: 1.02rem;
+    }
+
+    .glass {
+      -webkit-backdrop-filter: blur(18px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(3, 7, 18, 0.62);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    nav {
+      min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .logo { display: flex; align-items: center; gap: .85rem; position: relative; }
+    .logo-mark {
+      position: relative; width: 92px; height: 46px; display: inline-block;
+    }
+    .logo-mark img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+    }
+    .logo-base { opacity: 0.95; }
+    .logo-glow-a { filter: drop-shadow(0 0 12px rgba(100,232,255,.95)) hue-rotate(0deg); transform: translate(3px, -2px); opacity: 0.7; animation: driftA 4s ease-in-out infinite; }
+    .logo-glow-b { filter: drop-shadow(0 0 14px rgba(139,92,246,.95)) hue-rotate(40deg); transform: translate(-3px, 2px); opacity: 0.55; animation: driftB 4.8s ease-in-out infinite; }
+    .logo-text { font-size: 1.02rem; font-weight: 800; letter-spacing: -.03em; }
+    .logo-text span { color: var(--cyan); }
+    .hero-signature {
+      position: absolute; right: 2%; top: 8%; width: min(460px, 42vw); opacity: .16; pointer-events: none;
+      filter: drop-shadow(0 0 24px rgba(100,232,255,.32)); animation: pulse 6s ease-in-out infinite;
+    }
+    .hero-signature .sig-layer { position: absolute; inset: 0; width: 100%; }
+    .hero-signature .sig-main { position: relative; opacity: .9; }
+    .hero-signature .sig-a { transform: translate(10px, -8px); opacity: .75; filter: hue-rotate(0deg) drop-shadow(0 0 18px rgba(100,232,255,.7)); }
+    .hero-signature .sig-b { transform: translate(-12px, 8px); opacity: .55; filter: hue-rotate(70deg) drop-shadow(0 0 18px rgba(139,92,246,.7)); }
+    .qr-box { display: grid; place-items: center; margin-top: 1.1rem; padding: 1rem; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,.03); }
+    .qr-box img { width: 150px; height: 150px; border-radius: 14px; background: white; padding: .35rem; }
+    .qr-box p { margin-top: .7rem; color: var(--muted); font-size: .92rem; text-align: center; }
+    .contact-note { margin-top: 1rem; color: var(--muted); }
+    .cv-note { margin-top: .8rem; color: var(--muted); font-size: .92rem; }
+    
+    .nav-links {
+      list-style: none; display: flex; gap: 1.15rem; flex-wrap: wrap; align-items: center;
+    }
+    .nav-links a { color: var(--muted); transition: .25s ease; }
+    .nav-links a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      padding: .95rem 1.25rem; border-radius: 10px; border: 1px solid transparent;
+      cursor: pointer; font-weight: 700; transition: .28s ease;
+    }
+    .btn-primary {
+      color: #03111b;
+      background: linear-gradient(135deg, var(--cyan), var(--blue), #b79cff);
+      box-shadow: 0 10px 35px rgba(100, 232, 255, .25);
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.01); }
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+      border-color: var(--line);
+    }
+    .btn-secondary:hover { border-color: rgba(100,232,255,.45); }
+
+    .hero {
+      min-height: 100vh; display: grid; align-items: center; position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; align-items: center;
+      padding: 3rem 0 2rem;
+    }
+    .hero-copy h1 {
+      font-size: clamp(2.8rem, 6vw, 5.3rem);
+      line-height: .96; letter-spacing: -.07em; margin: .8rem 0 .85rem;
+    }
+    .hero-copy h1 .grad {
+      background: linear-gradient(135deg, #ffffff, var(--cyan), #c5b7ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-copy p {
+      color: var(--muted); max-width: 560px; font-size: 1rem; margin-bottom: 1.15rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.2rem; }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.25rem;
+    }
+    .pill {
+      padding: .5rem .75rem; border-radius: 10px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03); color: var(--muted); font-size: .92rem;
+    }
+
+    .visual-stack {
+      position: relative; min-height: 520px; display: grid; place-items: center;
+    }
+    .float-card {
+      position: absolute; width: min(100%, 520px); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+      background: var(--surface-2); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+      animation: levitate 7s ease-in-out infinite;
+    }
+    .window-bar {
+      height: 44px; display: flex; align-items: center; gap: .55rem; padding: 0 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03);
+    }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .red { background: #fb7185; } .yellow { background: #fbbf24; } .green-dot { background: #34d399; }
+
+    .code-window { top: 32px; right: 0; transform: rotate(2deg); animation: softFloat 7s ease-in-out infinite; }
+    .code-body { padding: 1.2rem; font-family: Consolas, monospace; color: #c9ddff; min-height: 310px; }
+    .line { display: block; margin-bottom: .7rem; opacity: .95; }
+    .c1 { color: #8b9bbd; }
+    .c2 { color: #64e8ff; }
+    .c3 { color: #c5b7ff; }
+    .c4 { color: #86efac; }
+
+    .terminal { bottom: 18px; left: 0; transform: rotate(-2deg); animation-delay: 1.6s; animation-duration: 8s; }
+    .terminal-body { padding: 1.2rem; font-family: Consolas, monospace; min-height: 230px; }
+    .terminal-body p { margin-bottom: .7rem; color: #dce8ff; }
+    .prompt { color: var(--green); }
+    .typing::after {
+      content: "|"; animation: blink 1s step-end infinite;
+      margin-left: 2px; color: var(--cyan);
+    }
+
+    .spotlight {
+      position: fixed; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(100, 232, 255, 0.08), transparent 62%);
+      pointer-events: none; transform: translate(-50%, -50%); z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    .stats-grid, .projects-grid, .skills-grid, .proof-grid, .about-grid, .contact-grid, .blog-grid {
+      display: grid; gap: 1.2rem;
+    }
+    .stats-grid { grid-template-columns: repeat(4, 1fr); margin-top: 2rem; }
+    .stat-card, .project-card, .skill-card, .proof-card, .timeline, .contact-card, .blog-card {
+      padding: 1.4rem; position: relative;
+    }
+    .stat-card h3 { font-size: 2rem; margin-bottom: .2rem; }
+    .muted { color: var(--muted); }
+
+    .identity-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+
+    .editor-tabs {
+      display: flex; gap: .6rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .editor-tab {
+      padding: .45rem .8rem; border-radius: 8px; border: 1px solid var(--line);
+      color: var(--muted); font-size: .9rem;
+    }
+    .editor-body { font-family: Consolas, monospace; color: #d6e5ff; }
+    .editor-body .accent { color: var(--cyan); }
+    .editor-body .violet { color: #c4b5fd; }
+    .editor-body .green { color: #86efac; }
+
+    .projects-top {
+      display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .filters { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .filter {
+      padding: .55rem .9rem; border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03); color: var(--muted); font-size: .9rem;
+    }
+    .filter.active {
+      color: #04121d; background: linear-gradient(135deg, var(--cyan), #b9f8ff); border-color: transparent;
+      font-weight: 700;
+    }
+
+    .projects-grid { grid-template-columns: repeat(3, 1fr); }
+    .project-thumb {
+      height: 180px; border-radius: 10px; margin-bottom: 1rem;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(100,232,255,.22), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(139,92,246,.22), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
+    }
+    .project-thumb::after {
+      content: ""; position: absolute; inset: 14px;
+      border-radius: 14px; border: 1px solid rgba(255,255,255,.09);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    }
+    .project-card h3 { margin-bottom: .55rem; }
+    .project-tags, .stack-tags, .socials { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .tag {
+      padding: .35rem .65rem; border-radius: 9px; background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07); color: var(--muted); font-size: .82rem;
+    }
+    .project-links { display: flex; gap: .8rem; margin-top: 1rem; flex-wrap: wrap; }
+
+    .skills-grid { grid-template-columns: 1.1fr .9fr; }
+    .progress-group { display: grid; gap: 1rem; }
+    .progress-item h4 { margin-bottom: .55rem; }
+    .bar {
+      width: 100%; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden;
+      border: 1px solid rgba(255,255,255,.04);
+    }
+    .bar span {
+      display: block; height: 100%; border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet));
+      animation: grow 1.8s ease forwards;
+      transform-origin: left;
+    }
+    .orbit {
+      min-height: 360px; position: relative; display: grid; place-items: center;
+    }
+    .center-chip {
+      width: 130px; height: 130px; border-radius: 50%; display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(100,232,255,.16), rgba(139,92,246,.16));
+      border: 1px solid var(--line); font-weight: 800; letter-spacing: -.03em;
+      box-shadow: var(--shadow);
+    }
+    .orbit-item {
+      position: absolute; padding: .6rem .95rem; border-radius: 10px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.04); color: var(--text); font-size: .88rem;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .o1 { top: 15%; left: 50%; transform: translateX(-50%); }
+    .o2 { top: 32%; right: 12%; }
+    .o3 { bottom: 18%; right: 18%; }
+    .o4 { bottom: 10%; left: 50%; transform: translateX(-50%); }
+    .o5 { bottom: 26%; left: 10%; }
+    .o6 { top: 34%; left: 8%; }
+
+    .proof-grid { grid-template-columns: repeat(5, 1fr); }
+    .proof-card strong { display: block; font-size: 1.6rem; margin-bottom: .25rem; }
+
+    .about-grid { grid-template-columns: .9fr 1.1fr; align-items: start; }
+    .timeline ul { list-style: none; display: grid; gap: 1rem; }
+    .timeline li {
+      padding-left: 1.2rem; position: relative; color: var(--muted);
+    }
+    .timeline li::before {
+      content: ""; position: absolute; left: 0; top: .45rem; width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--violet)); box-shadow: 0 0 14px rgba(100,232,255,.55);
+    }
+    .about-panel p { color: var(--muted); margin-bottom: 1rem; }
+
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+    .contact-form { display: grid; gap: .9rem; }
+    input, textarea, select {
+      width: 100%; padding: 1rem 1rem; border-radius: 10px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.03); color: var(--text); outline: none;
+    }
+    textarea { min-height: 150px; resize: vertical; }
+    .socials a {
+      padding: .75rem 1rem; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.03);
+    }
+
+    .blog-grid { grid-template-columns: repeat(3, 1fr); }
+    .blog-card h3 { margin-bottom: .5rem; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.06); padding: 1.5rem 0 2.2rem; color: var(--muted);
+    }
+    .footer-row { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+    .reveal {
+      opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform 1.1s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.active {
+      opacity: 1; transform: translateY(0);
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes levitate {
+      0%,100% { transform: translate3d(0,0,0) rotate(2deg); }
+      50% { transform: translate3d(0,-12px,0) rotate(.5deg); }
+    }
+    @keyframes softFloat {
+      0%,100% { transform: translate3d(0,0,0); }
+      50% { transform: translate3d(0,-8px,0); }
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translate3d(0,var(--hero-shift),0); }
+      100% { opacity: 1; transform: translate3d(0,0,0); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    @keyframes driftA {
+      0%,100% { transform: translate(3px, -2px); }
+      50% { transform: translate(8px, -5px); }
+    }
+    @keyframes driftB {
+      0%,100% { transform: translate(-3px, 2px); }
+      50% { transform: translate(-8px, 6px); }
+    }
+    @keyframes grow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    @media (max-width: 1080px) {
+      .hero { min-height: auto; padding-top: 3rem; }
+      .hero-signature { width: min(340px, 52vw); right: -4%; top: 12%; }
+      .hero-grid, .identity-grid, .skills-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-copy { order: 1; }
+      .visual-stack { order: 2; }
+      .hero-grid, .identity-grid, .skills-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .proof-grid { grid-template-columns: repeat(3, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+      .visual-stack { min-height: 540px; margin-top: 2rem; }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .logo-text { font-size: .92rem; }
+      .logo-mark { width: 74px; height: 36px; }
+      .projects-grid, .proof-grid, .stats-grid, .blog-grid { grid-template-columns: 1fr; }
+      .hero-copy h1 { font-size: clamp(2.35rem, 12vw, 3.5rem); }
+      .hero-copy p { font-size: .95rem; }
+      .hero-actions { width: 100%; }
+      .hero-actions .btn { flex: 1 1 100%; }
+      .hero-meta { gap: .55rem; }
+      .hero-signature { width: 72vw; right: -12%; top: 10%; opacity: .13; }
+      .visual-stack { min-height: 360px; margin-top: 1.25rem; }
+      .float-card { width: 100%; max-width: 100%; }
+      .code-window { top: 0; transform: rotate(.5deg); }
+      .terminal { bottom: 0; transform: rotate(-.5deg); }
+      .code-body, .terminal-body { min-height: 0; padding: 1rem; }
+      .stats-grid, .proof-grid, .contact-grid, .skills-grid, .about-grid, .blog-grid, .identity-grid { gap: .9rem; }
+      .section { padding: 4rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="spotlight" id="spotlight"></div>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <img class="logo-glow-a" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEBCAYAAACOiVcgAABNMElEQVR4nO2dd5hlRbW3f9VpEmGGMOQoSZAMAoJcEQFJggEVRRFUBAVFQFQUFBT8d9xxd8fdn1v2vXvO+bN6zjpp1f/Vf7ZnyvXUq3J1dXUdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC3Q7P6AcDO0T3x5RtPdtcL2Z4T4qNPPsJ5j1/af7y0tNRtAODPU/PAf7+x3/2U7T+9fe+S8gUAYI+8fP5ev9l0r8sHjV5dv5eG7nQ7n5qZmbnQ7wDg71N3H+XvP7x9n1w7JmVnZ/PeAwDg31O3n+W1l+7fW7Y3pX3v6c9V2wEA2C9qP6cP7W4f3j0nF4f7m1mZmbx9AAB2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AAA==" alt="" />
+            <img class="logo-glow-b" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEBCAYAAACOiVcgAABNMElEQVR4nO2dd5hlRbW3f9VpEmGGMOQoSZAMAoJcEQFJggEVRRFUBAVFQFQUFBT8d9xxd8fdn1v2vXvO+bN6zjpp1f/Vf7ZnyvXUq3J1dXUdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC3Q7P6AcDO0T3x5RtPdtcL2Z4T4qNPPsJ5j1/af7y0tNRtAODPU/PAf7+x3/2U7T+9fe+S8gUAYI+8fP5ev9l0r8sHjV5dv5eG7nQ7n5qZmbnQ7wDg71N3H+XvP7x9n1w7JmVnZ/PeAwDg31O3n+W1l+7fW7Y3pX3v6c9V2wEA2C9qP6cP7W4f3j0nF4f7m1mZmbx9AAB2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AAA==" alt="" />
+            <img class="logo-base" src="assets/signature.png" style="width: 100%; height: auto;" alt="Abdelwahed Ourida signature logo" />
+          </span>
+          <span class="logo-text">Abdelwahed <span>Ourida</span></span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#proof">Proof</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Let’s build</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-signature" aria-hidden="true">
+        <img class="sig-layer sig-a" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEBCAYAAACOiVcgAABNMElEQVR4nO2dd5hlRbW3f9VpEmGGMOQoSZAMAoJcEQFJggEVRRFUBAVFQFQUFBT8d9xxd8fdn1v2vXvO+bN6zjpp1f/Vf7ZnyvXUq3J1dXUdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC3Q7P6AcDO0T3x5RtPdtcL2Z4T4qNPPsJ5j1/af7y0tNRtAODPU/PAf7+x3/2U7T+9fe+S8gUAYI+8fP5ev9l0r8sHjV5dv5eG7nQ7n5qZmbnQ7wDg71N3H+XvP7x9n1w7JmVnZ/PeAwDg31O3n+W1l+7fW7Y3pX3v6c9V2wEA2C9qP6cP7W4f3j0nF4f7m1mZmbx9AAB2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AAA==" alt="" />
+        <img class="sig-layer sig-b" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEBCAYAAACOiVcgAABNMElEQVR4nO2dd5hlRbW3f9VpEmGGMOQoSZAMAoJcEQFJggEVRRFUBAVFQFQUFBT8d9xxd8fdn1v2vXvO+bN6zjpp1f/Vf7ZnyvXUq3J1dXUdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC3Q7P6AcDO0T3x5RtPdtcL2Z4T4qNPPsJ5j1/af7y0tNRtAODPU/PAf7+x3/2U7T+9fe+S8gUAYI+8fP5ev9l0r8sHjV5dv5eG7nQ7n5qZmbnQ7wDg71N3H+XvP7x9n1w7JmVnZ/PeAwDg31O3n+W1l+7fW7Y3pX3v6c9V2wEA2C9qP6cP7W4f3j0nF4f7m1mZmbx9AAB2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AA B2j5of7r+8dfeY9v2m9p1u9mZmZl8fQAAdo+aH+4/vHX3mPb9pvadbvZmZmZfH0AAHaPmh/uv7x195j2/ab2nW72ZmZmXx9AAA==" alt="" />
+        <img class="sig-main" src="" alt="" />
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal active">
+          <span class="badge">Full-Stack Developer • PHP • SQL • Admin Systems</span>
+          <h1>
+            Building <span class="grad">dynamic platforms</span> with clean logic and premium motion.
+          </h1>
+          <p>
+            Full-stack developer focused on admin dashboards, user flows, and database-driven products.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Book a Call</a>
+          </div>
+          <div class="hero-meta">
+            <span class="pill">PHP / PDO</span>
+            <span class="pill">MySQL</span>
+            <span class="pill">Admin Dashboards</span>
+          </div>
+        </div>
+
+        <div class="visual-stack reveal active">
+          <div class="float-card code-window">
+            <div class="window-bar">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green-dot"></span>
+            </div>
+            <div class="code-body">
+              <span class="line"><span class="c1">// product-minded full-stack</span></span>
+              <span class="line"><span class="c2">stack</span>: <span class="c3">PHP</span>, <span class="c3">MySQL</span>, <span class="c3">JavaScript</span></span>
+              <span class="line"><span class="c2">focus</span>: <span class="c4">admin</span> + <span class="c4">user</span> architecture</span>
+              <span class="line"><span class="c2">status</span>: <span class="c3">available for opportunities</span></span>
+            </div>
+          </div>
+
+          <div class="float-card terminal">
+            <div class="window-bar">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green-dot"></span>
+            </div>
+            <div class="terminal-body">
+              <p><span class="prompt">&gt; whoami</span><br />Abdelwahed Ourida</p>
+              <p><span class="prompt">&gt; role</span><br />Full Stack Developer</p>
+              <p><span class="prompt">&gt; building</span><br /><span class="typing">Admin & user-side web platforms</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container stats-grid">
+        <article class="stat-card glass reveal"><h3>3+</h3><p class="muted">Real-world portfolio projects</p></article>
+        <article class="stat-card glass reveal"><h3>100%</h3><p class="muted">Responsive, modern interfaces</p></article>
+        <article class="stat-card glass reveal"><h3>24h</h3><p class="muted">Typical response time</p></article>
+        <article class="stat-card glass reveal"><h3>Admin</h3><p class="muted">Dashboard and management systems</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <span class="badge reveal">Developer identity</span>
+        <h2 class="section-title reveal">A portfolio that feels like a product.</h2>
+        <p class="section-subtitle reveal">
+          I build interfaces, business logic, dashboards, routing, and database-connected systems that combine premium UI with practical full-stack engineering.
+        </p>
+
+        <div class="identity-grid">
+          <article class="glass project-card reveal">
+            <div class="editor-tabs">
+              <span class="editor-tab">app.tsx</span>
+              <span class="editor-tab">api.js</span>
+              <span class="editor-tab">schema.sql</span>
+            </div>
+            <div class="editor-body">
+              <p><span class="accent">function</span> <span class="violet">buildProduct</span>() {'{'}</p>
+              <p>&nbsp;&nbsp;<span class="accent">return</span> {'{'}</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;ui: <span class="green">"clean + animated"</span>,</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;backend: <span class="green">"scalable + secure"</span>,</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;experience: <span class="green">"fast + intuitive"</span></p>
+              <p>&nbsp;&nbsp;{'}'}</p>
+              <p>{'}'}</p>
+            </div>
+          </article>
+
+          <article class="glass project-card reveal">
+            <h3>Currently building</h3>
+            <p class="muted" style="margin: .65rem 0 1rem;">Dynamic PHP platforms, e-commerce flows, dashboard analytics, multilingual websites, and admin panels with strong UX thinking.</p>
+            <div class="stack-tags">
+              <span class="tag">Frontend architecture</span>
+              <span class="tag">Backend systems</span>
+              <span class="tag">Database design</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">Clean UI motion</span>
+              <span class="tag">Deployment mindset</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="container">
+        <span class="badge reveal">System architecture</span>
+        <h2 class="section-title reveal">Admin side, user side, database, and full-stack flow.</h2>
+        <p class="section-subtitle reveal">This section makes your backend mindset visible even on GitHub Pages. It shows how you think about multi-side platforms, management logic, and dynamic systems.</p>
+
+        <div class="projects-grid">
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>Admin Side</h3>
+            <p class="muted">Dashboard views, content management, analytics cards, secure forms, CRUD operations, and role-aware interfaces built for control and efficiency.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">Dashboard UI</span><span class="tag">CRUD</span><span class="tag">Management</span><span class="tag">Security</span>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>User Side</h3>
+            <p class="muted">Responsive public-facing interfaces for browsing, submitting, purchasing, interacting, and navigating dynamic content with a polished user experience.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">Responsive UI</span><span class="tag">Forms</span><span class="tag">UX Flow</span><span class="tag">Frontend Logic</span>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>Backend + Database Flow</h3>
+            <p class="muted">PHP business logic, PDO-based data access, MySQL schema thinking, validation, routing, and secure request handling represented through architecture and case studies.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">PHP</span><span class="tag">PDO</span><span class="tag">MySQL</span><span class="tag">Routing</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="projects-top reveal">
+          <div>
+            <span class="badge">Featured work</span>
+            <h2 class="section-title">Selected projects & case studies</h2>
+          </div>
+          <div class="filters">
+            <span class="filter active">All</span>
+            <span class="filter">Frontend</span>
+            <span class="filter">Backend</span>
+            <span class="filter">Full Stack</span>
+            <span class="filter">Dashboard</span>
+          </div>
+        </div>
+        <p class="section-subtitle reveal">This portfolio is built as a GitHub Pages-ready frontend experience, while visually showcasing real backend thinking: admin dashboards, CRUD flows, routing, role-based structure, and PHP/PDO/MySQL project architecture.</p>
+
+        <div class="projects-grid">
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>Ticket Program Platform</h3>
+            <p class="muted">Dynamic ticket management platform with admin dashboard, secure forms, routing, multilingual support, and analytics.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">PHP OOP</span><span class="tag">PDO</span><span class="tag">MySQL</span><span class="tag">Chart.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-secondary">Live Demo</a>
+              <a href="#" class="btn btn-secondary">GitHub</a>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>E-commerce Website</h3>
+            <p class="muted">Online store experience with structured product flows, backend logic, responsive frontend, and scalable database design.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">PHP</span><span class="tag">SQL</span><span class="tag">Bootstrap</span><span class="tag">JavaScript</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-secondary">Live Demo</a>
+              <a href="#" class="btn btn-secondary">GitHub</a>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-thumb"></div>
+            <h3>Club Leaders of Tomorrow Website</h3>
+            <p class="muted">Club website with dynamic content structure, bilingual support, visual identity direction, and administrative organization.</p>
+            <div class="project-tags" style="margin-top: 1rem;">
+              <span class="tag">PHP OOP</span><span class="tag">Node.js</span><span class="tag">i18n</span><span class="tag">Chart.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-secondary">Case Study</a>
+              <a href="#" class="btn btn-secondary">GitHub</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <span class="badge reveal">Technical stack</span>
+        <h2 class="section-title reveal">Skills that connect product, code, and scale.</h2>
+        <p class="section-subtitle reveal">Use this section to show what you master, what you use daily, and what you are actively leveling up.</p>
+
+        <div class="skills-grid">
+          <article class="skill-card glass reveal">
+            <div class="progress-group">
+              <div class="progress-item">
+                <h4>PHP / Backend Logic</h4>
+                <div class="bar"><span style="width: 90%;"></span></div>
+              </div>
+              <div class="progress-item">
+                <h4>SQL / MySQL Databases</h4>
+                <div class="bar"><span style="width: 88%;"></span></div>
+              </div>
+              <div class="progress-item">
+                <h4>Frontend Integration</h4>
+                <div class="bar"><span style="width: 85%;"></span></div>
+              </div>
+              <div class="progress-item">
+                <h4>Admin Dashboard Design</h4>
+                <div class="bar"><span style="width: 87%;"></span></div>
+              </div>
+              <div class="progress-item">
+                <h4>Security / Routing / APIs</h4>
+                <div class="bar"><span style="width: 80%;"></span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="skill-card glass reveal">
+            <div class="orbit">
+              <div class="center-chip">FULL STACK</div>
+              <span class="orbit-item o1">PHP</span>
+              <span class="orbit-item o2">MySQL</span>
+              <span class="orbit-item o3">SQL</span>
+              <span class="orbit-item o4">Node.js</span>
+              <span class="orbit-item o5">JavaScript</span>
+              <span class="orbit-item o6">Bootstrap</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proof">
+      <div class="container">
+        <span class="badge reveal">Trust & proof</span>
+        <h2 class="section-title reveal">Signals that make recruiters and clients stop scrolling.</h2>
+        <div class="proof-grid">
+          <article class="proof-card glass reveal"><strong>IDIA</strong><span class="muted">Data & AI engineering student</span></article>
+          <article class="proof-card glass reveal"><strong>3</strong><span class="muted">Highlighted real projects</span></article>
+          <article class="proof-card glass reveal"><strong>15.80</strong><span class="muted">Validated BTS average</span></article>
+          <article class="proof-card glass reveal"><strong>Fast</strong><span class="muted">Communication style</span></article>
+          <article class="proof-card glass reveal"><strong>Clean</strong><span class="muted">Code & UI standards</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container about-grid">
+        <article class="timeline glass reveal">
+          <h3 style="margin-bottom: 1rem;">Journey timeline</h3>
+          <ul>
+            <li><strong style="color: var(--text);">BTS Web Full Stack</strong><br />Validated S1 and S2 with strong technical foundations in web development.</li>
+            <li><strong style="color: var(--text);">Real project experience</strong><br />Worked on ticketing, e-commerce, and club website projects with practical full-stack features.</li>
+            <li><strong style="color: var(--text);">ONEE initiation internship</strong><br />Strengthened adaptation, rigor, and team collaboration in a professional environment.</li>
+            <li><strong style="color: var(--text);">IDIA studies</strong><br />Currently studying Data Engineering and Artificial Intelligence while growing full-stack expertise.</li>
+          </ul>
+        </article>
+
+        <article class="about-panel glass project-card reveal">
+          <span class="badge">About me</span>
+          <h2 class="section-title" style="font-size: 2.2rem;">I care about how things feel, work, and scale.</h2>
+          <p>
+            I am Abdelwahed Ourida, a student in Data Engineering and Artificial Intelligence with solid full-stack web development foundations and a strong interest in building dynamic, useful digital products.
+          </p>
+          <p>
+            I especially enjoy creating dynamic websites with PHP, SQL, admin dashboards, multilingual support, and clean interfaces that reflect both technical rigor and visual quality.
+          </p>
+          <div class="stack-tags">
+            <span class="tag">PHP / SQL</span>
+            <span class="tag">Admin dashboards</span>
+            <span class="tag">Dynamic websites</span>
+            <span class="tag">Full-stack mindset</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="blog">
+      <div class="container">
+        <span class="badge reveal">Blog & insights</span>
+        <h2 class="section-title reveal">Share what you learn and build.</h2>
+        <p class="section-subtitle reveal">A blog makes your portfolio feel alive and proves how you think, not only what you ship.</p>
+        <div class="blog-grid">
+          <article class="blog-card glass reveal">
+            <h3>How I structure scalable frontend code</h3>
+            <p class="muted">A practical breakdown of components, architecture, and maintainability.</p>
+          </article>
+          <article class="blog-card glass reveal">
+            <h3>Designing better dashboard UX</h3>
+            <p class="muted">What makes admin interfaces clear, fast, and easy to use.</p>
+          </article>
+          <article class="blog-card glass reveal">
+            <h3>From API idea to deployed product</h3>
+            <p class="muted">The workflow I use to move from concept to launch-ready implementation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <span class="badge reveal">Let’s work together</span>
+        <h2 class="section-title reveal">Contact section with premium call-to-action</h2>
+        <p class="section-subtitle reveal">Replace placeholders with your real email, WhatsApp, calendly link, GitHub, and LinkedIn.</p>
+
+        <div class="contact-grid">
+          <article class="contact-card glass reveal">
+            <h3 style="margin-bottom: 1rem;">Send a message</h3>
+            <form class="contact-form">
+              <input type="text" placeholder="Your name" />
+              <input type="email" placeholder="Your email" />
+              <select title="Select inquiry type">
+                <option>Project inquiry</option>
+                <option>Freelance work</option>
+                <option>Full-time opportunity</option>
+                <option>Collaboration</option>
+              </select>
+              <textarea placeholder="Tell me about your project..."></textarea>
+              <button type="button" class="btn btn-primary">Send Message</button>
+            </form>
+          </article>
+
+          <article class="contact-card glass reveal">
+            <h3 style="margin-bottom: 1rem;">Direct links</h3>
+            <p class="muted" style="margin-bottom: 1rem;">Make it easy for people to reach you in one click.</p>
+            <div class="socials">
+              <a href="https://github.com/OuridaAbdelwahed" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://www.linkedin.com/in/ouridopener noa-abdelwahed/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="mailto:abdelwahed.ourida1@usms.ac.ma">Academic Email</a>
+              <a href="mailto:ouridaabdelwahed@gmail.com">Personal Email</a>
+              <a href="https://wa.me/212674959442" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a href="MyCv.pdf" target="_blank" rel="noreferrer">Download CV</a>
+            </div>
+            <div class="qr-box">
+              <img src="wtsp.png" alt="WhatsApp QR code" />
+              <p>Scan to contact me on WhatsApp</p>
+            </div>
+            <p class="contact-note">WhatsApp: +212 6 74 95 94 42</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="section">
+      <div class="container">
+        <span class="badge reveal">Deployment note</span>
+        <h2 class="section-title reveal">Built for GitHub Pages, designed to communicate backend strength.</h2>
+        <p class="section-subtitle reveal">GitHub Pages cannot execute PHP, PDO, or MySQL directly, so this portfolio is intentionally built as a premium frontend showcase. Your backend expertise is communicated through architecture visuals, project case studies, dashboard sections, code-inspired UI, and links to repositories or live demos hosted elsewhere.</p>
+      </div>
+    </section>
+
+  <footer>
+    <div class="container footer-row">
+      <p>© 2026 Abdelwahed Ourida. Built to ship, scale, and stand out.</p>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.14 });
+    reveals.forEach(el => observer.observe(el));
+
+    const spotlight = document.getElementById('spotlight');
+    window.addEventListener('mousemove', (e) => {
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+    });
+  </script>
+</body>
+</html>
